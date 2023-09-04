@@ -12,22 +12,21 @@ const useTodo = (url: string) => {
   const [data, setData] = useState<TodoResponse | undefined>(undefined);
   const [isFetching, setIsFetching] = useState(true);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(url);
-      setIsFetching(false);
-      if (response.status === 200) {
-        const json = await response.json();
-        setData(json);
-      }
-    } catch (e: unknown) {
-      setIsFetching(false);
-
-      console.log(isError(e) ? e.message : "Unknown error!");
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        setIsFetching(false);
+        if (response.status === 200) {
+          const json = await response.json();
+          setData(json);
+        }
+      } catch (e: unknown) {
+        setIsFetching(false);
+
+        console.log(isError(e) ? e.message : "Unknown error!");
+      }
+    };
     fetchData();
   }, [url]);
 
